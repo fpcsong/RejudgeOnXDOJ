@@ -54,10 +54,11 @@ namespace RejudgeOnXDOJ
                 int ii = i;
                 //MessageBox.Show(data[i].ToString());
                 textBox2.Text += data[i].ToString() + Environment.NewLine;
-                Task.Factory.StartNew(() =>
+                new Thread(() =>
                 {
                     string rejudgeUrl = "http://acm.xidian.edu.cn/admin/rejudge.php";
                     string html = Query.HttpGetRequest(rejudgeUrl, rejudgeUrl, "GET", cookie.Text.ToString(), null);
+                    //textBox2.Text += html;
                     //获得postkey
                     html = html.Substring(html.IndexOf("Solution"));
                     html = html.Substring(html.IndexOf("postkey"));
@@ -68,9 +69,10 @@ namespace RejudgeOnXDOJ
                     dict.Add("rjsid", data[ii].ToString());
                     dict.Add("do", "do");
                     dict.Add("postkey", postkey);
-                    Query.HttpGetRequest(rejudgeUrl, rejudgeUrl, "POST", cookie.Text.ToString(), dict);
-                });
-                Thread.Sleep(3000);
+                    //MessageBox.Show(postkey);
+                    textBox2.Text += Query.HttpGetRequest(rejudgeUrl, rejudgeUrl, "POST", cookie.Text.ToString(), dict);
+                }).Start();
+                Thread.Sleep(1000);
             }
         }
         /// <summary>
@@ -104,6 +106,7 @@ namespace RejudgeOnXDOJ
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            System.Net.ServicePointManager.DefaultConnectionLimit = 200;
             /*
             cookie.Text = "h286makj44kn59hick7o0ahhn6";
             page.Text = "http://acm.xidian.edu.cn/status.php?problem_id=&user_id=root&cid=1022&language=-1&jresult=-1&showsim=0";

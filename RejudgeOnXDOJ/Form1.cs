@@ -1,0 +1,113 @@
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading;
+
+namespace RejudgeOnXDOJ
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        public static int[] data = new int[10000];
+        public static int cnt = 0;
+        /// <summary>
+        /// 根据页面来重判，仅仅可以用于比赛中的状态页面
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="data"></param>
+        public void GetId(string url, ref int[] data)
+        {
+            //获取需要重判的页面
+            string html = Query.HttpGetRequest(url, url,"GET",cookie.Text.ToString(),null);
+            int start = html.IndexOf("<tbody>");
+            int len = html.IndexOf("</tbody>") - start;
+            if (len < 0) return;
+            html = html.Substring(start, len);
+            cnt = 0;
+            //获取所有重判的编号
+            while (html.IndexOf("<tr><td>") != -1)
+            {
+                int numstart = html.IndexOf("<tr><td>") + 9;
+                html = html.Substring(numstart);
+                int numend = html.IndexOf("</td><td>") - 1;
+                int numlen = numend + 1;
+                if (numlen <= 0) return;
+                string num = html.Substring(0, numlen);
+                int.TryParse(num, out data[++cnt]);
+                //MessageBox.Show(data[cnt].ToString());
+            }
+            Rejudge();
+        }
+        /// <summary>
+        /// 将data数组里的所有编号重新评测
+        /// </summary>
+        public void Rejudge()
+        {
+            
+            for (int i = 1; i <= cnt; i++)
+            {
+                int ii = i;
+                //MessageBox.Show(data[i].ToString());
+                textBox2.Text += data[i].ToString() + Environment.NewLine;
+                Task.Factory.StartNew(() =>
+                {
+                    string rejudgeUrl = "http://acm.xidian.edu.cn/admin/rejudge.php";
+                    string html = Query.HttpGetRequest(rejudgeUrl, rejudgeUrl, "GET", cookie.Text.ToString(), null);
+                    //获得postkey
+                    html = html.Substring(html.IndexOf("Solution"));
+                    html = html.Substring(html.IndexOf("postkey"));
+                    html = html.Substring(html.IndexOf("value"));
+                    string postkey = html.Substring(html.IndexOf("\"") + 1, 10);
+                    //发送重判请求
+                    Dictionary<string, string> dict = new Dictionary<string, string>();
+                    dict.Add("rjsid", data[ii].ToString());
+                    dict.Add("do", "do");
+                    dict.Add("postkey", postkey);
+                    Query.HttpGetRequest(rejudgeUrl, rejudgeUrl, "POST", cookie.Text.ToString(), dict);
+                });
+                Thread.Sleep(3000);
+            }
+        }
+        /// <summary>
+        /// 直接指定运行编号序列来重判
+        /// </summary>
+        public void Getdata()
+        {
+            string tmp = num.Text.ToString();
+            string[] strdata = new string[1000];
+            strdata= tmp.Split(' ');
+            cnt = 0;
+            foreach(string str in strdata)
+            {
+                //MessageBox.Show(str);
+                data[++cnt] = int.Parse(str);
+            }
+            Rejudge();
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            textBox2.Text = "";
+            string url = page.Text.ToString();
+            Task.Factory.StartNew(() => GetId(url, ref data));
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            textBox2.Text = "";
+            Task.Factory.StartNew(() => Getdata());
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            /*
+            cookie.Text = "h286makj44kn59hick7o0ahhn6";
+            page.Text = "http://acm.xidian.edu.cn/status.php?problem_id=&user_id=root&cid=1022&language=-1&jresult=-1&showsim=0";
+            */
+        }
+    }
+}

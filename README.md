@@ -1,3 +1,4 @@
 # RejudgeOnXDOJ
 给hustoj用的批量rejudge工具，在hustoj挂掉出现大量编译中的时候可以使用，线程间隔500ms
+
 两个start按钮分别用来重判指定页面的所有运行编号和给定的运行编号序列

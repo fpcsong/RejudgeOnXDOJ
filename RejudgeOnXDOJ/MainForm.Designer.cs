@@ -1,6 +1,6 @@
 ﻿namespace RejudgeOnXDOJ
 {
-    partial class Form1
+    partial class MainFom
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -30,13 +30,16 @@
         {
             this.page = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.output = new System.Windows.Forms.TextBox();
             this.cookie = new System.Windows.Forms.TextBox();
             this.num = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.opacity = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // page
@@ -44,47 +47,47 @@
             this.page.Location = new System.Drawing.Point(25, 64);
             this.page.Name = "page";
             this.page.Size = new System.Drawing.Size(232, 21);
-            this.page.TabIndex = 0;
+            this.page.TabIndex = 1;
             // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(316, 63);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
+            this.button1.TabIndex = 3;
             this.button1.Text = "Start";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox2
+            // output
             // 
-            this.textBox2.Location = new System.Drawing.Point(25, 129);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox2.Size = new System.Drawing.Size(366, 109);
-            this.textBox2.TabIndex = 2;
+            this.output.Location = new System.Drawing.Point(25, 129);
+            this.output.Multiline = true;
+            this.output.Name = "output";
+            this.output.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.output.Size = new System.Drawing.Size(366, 109);
+            this.output.TabIndex = 2;
             // 
             // cookie
             // 
             this.cookie.Location = new System.Drawing.Point(25, 23);
             this.cookie.Name = "cookie";
             this.cookie.Size = new System.Drawing.Size(232, 21);
-            this.cookie.TabIndex = 3;
+            this.cookie.TabIndex = 0;
             // 
             // num
             // 
             this.num.Location = new System.Drawing.Point(25, 102);
             this.num.Name = "num";
             this.num.Size = new System.Drawing.Size(232, 21);
-            this.num.TabIndex = 4;
+            this.num.TabIndex = 2;
             // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(316, 100);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 5;
+            this.button2.TabIndex = 4;
             this.button2.Text = "Start";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -116,22 +119,57 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "运行编号（空格间隔）";
             // 
-            // Form1
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(0, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 12);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "label4";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(263, 26);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 12);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "透明度";
+            // 
+            // opacity
+            // 
+            this.opacity.Location = new System.Drawing.Point(316, 23);
+            this.opacity.Name = "opacity";
+            this.opacity.Size = new System.Drawing.Size(75, 21);
+            this.opacity.TabIndex = 11;
+            this.opacity.TextChanged += new System.EventHandler(this.opacity_TextChanged);
+            // 
+            // MainFom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(433, 261);
+            this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ClientSize = new System.Drawing.Size(424, 261);
+            this.Controls.Add(this.opacity);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.num);
             this.Controls.Add(this.cookie);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.output);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.page);
-            this.Name = "Form1";
+            this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
+            this.Name = "MainFom";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "西电ACMrejudge工具";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -142,13 +180,16 @@
 
         private System.Windows.Forms.TextBox page;
         private System.Windows.Forms.Button button1;
-        public System.Windows.Forms.TextBox textBox2;
+        public System.Windows.Forms.TextBox output;
         private System.Windows.Forms.TextBox cookie;
         private System.Windows.Forms.TextBox num;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox opacity;
     }
 }
 

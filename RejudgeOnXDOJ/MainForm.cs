@@ -7,9 +7,9 @@ using System.Threading;
 
 namespace RejudgeOnXDOJ
 {
-    public partial class Form1 : Form
+    public partial class MainFom : Form
     {
-        public Form1()
+        public MainFom()
         {
             InitializeComponent();
         }
@@ -52,13 +52,10 @@ namespace RejudgeOnXDOJ
             for (int i = 1; i <= cnt; i++)
             {
                 int ii = i;
-                //MessageBox.Show(data[i].ToString());
-                textBox2.Text += data[i].ToString() + Environment.NewLine;
                 new Thread(() =>
                 {
                     string rejudgeUrl = "http://acm.xidian.edu.cn/admin/rejudge.php";
                     string html = Query.HttpGetRequest(rejudgeUrl, rejudgeUrl, "GET", cookie.Text.ToString(), null);
-                    //textBox2.Text += html;
                     //获得postkey
                     html = html.Substring(html.IndexOf("Solution"));
                     html = html.Substring(html.IndexOf("postkey"));
@@ -69,10 +66,13 @@ namespace RejudgeOnXDOJ
                     dict.Add("rjsid", data[ii].ToString());
                     dict.Add("do", "do");
                     dict.Add("postkey", postkey);
-                    //MessageBox.Show(postkey);
-                    textBox2.Text += Query.HttpGetRequest(rejudgeUrl, rejudgeUrl, "POST", cookie.Text.ToString(), dict);
+                    lock(output)
+                    {
+                        string tmp = Query.HttpGetRequest(rejudgeUrl, rejudgeUrl, "POST", cookie.Text.ToString(), dict);
+                        if (tmp != null) output.Text += data[ii].ToString() + " Rejudged" + Environment.NewLine;
+                    }
                 }).Start();
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
             }
         }
         /// <summary>
@@ -86,31 +86,50 @@ namespace RejudgeOnXDOJ
             cnt = 0;
             foreach(string str in strdata)
             {
-                //MessageBox.Show(str);
                 data[++cnt] = int.Parse(str);
             }
             Rejudge();
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            textBox2.Text = "";
+            output.Text = "";
             string url = page.Text.ToString();
             Task.Factory.StartNew(() => GetId(url, ref data));
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            textBox2.Text = "";
+            output.Text = "";
             Task.Factory.StartNew(() => Getdata());
         }
+        /// <summary>
+        /// 设置总在最前和透明度设置方便在浏览器之上操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void Form1_Load(object sender, EventArgs e)
         {
             System.Net.ServicePointManager.DefaultConnectionLimit = 200;
-            /*
-            cookie.Text = "h286makj44kn59hick7o0ahhn6";
-            page.Text = "http://acm.xidian.edu.cn/status.php?problem_id=&user_id=root&cid=1022&language=-1&jresult=-1&showsim=0";
-            */
+            Opacity = 0.75;
+            
+        }
+        private void opacity_TextChanged(object sender, EventArgs e)
+        {
+            if (opacity.Text.ToString() == string.Empty)
+            {
+                opacity.Text = "0.75";
+                Opacity = 0.75;
+            }
+            else
+            {
+                double opacityValue = 0;
+                double.TryParse(opacity.Text.ToString(), out opacityValue);
+                if (opacityValue > 0 && opacityValue <= 1)
+                {
+                    Opacity = opacityValue;
+                }
+            }
         }
     }
 }

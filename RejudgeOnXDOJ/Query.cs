@@ -22,22 +22,26 @@ namespace RejudgeOnXDOJ
         /// <returns></returns>
         public static string HttpGetRequest(string strRequestUri, string strReferer,string Method,string cookie, Dictionary<string, string> parameters)
         {
+            GC.Collect();
             HttpWebRequest httpRequest = (HttpWebRequest)HttpWebRequest.Create(strRequestUri);
             Uri uri = new Uri(strRequestUri);
             CookieContainer cookies = new CookieContainer();
             cookies.Add(uri,new Cookie("lastlang", "1"));
             if (cookie == null) cookie = "h286makj44kn59hick7o0ahhn6";
+            cookies.Add(uri, new Cookie("dicthuaci", "off"));
             cookies.Add(uri,new Cookie("PHPSESSID", cookie));
             httpRequest.CookieContainer = cookies;
             httpRequest.Method = Method;
             httpRequest.Referer = strReferer;
-            httpRequest.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.89 Safari/537.36";
+            httpRequest.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36";
             httpRequest.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-            httpRequest.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
-            httpRequest.Timeout = 10000;
-            httpRequest.KeepAlive = true;
+            httpRequest.ContentType = "application/x-www-form-urlencoded";
+            httpRequest.Timeout = 100000;
+            httpRequest.KeepAlive = false;
+            httpRequest.Proxy = null;
             if (Method == "POST")
             {
+                httpRequest.ServicePoint.Expect100Continue = false;
                 //构造post数据
                 if (!(parameters == null || parameters.Count == 0))
                 {
@@ -51,11 +55,10 @@ namespace RejudgeOnXDOJ
                         }
                         else
                         {
-                            buffer.AppendFormat("{0}={1}%09%", key, parameters[key]);
+                            buffer.AppendFormat("{0}={1}", key, parameters[key]);
                             i++;
                         }
                     }
-                    //MessageBox.Show(buffer.ToString());
                     byte[] data = Encoding.ASCII.GetBytes(buffer.ToString());
                     using (Stream stream = httpRequest.GetRequestStream())
                     {
@@ -72,6 +75,8 @@ namespace RejudgeOnXDOJ
                 string strResponse = reader.ReadToEnd();
                 reader.Close();
                 responseStream.Close();
+                httpRequest.Abort();
+                httpRequest = null;
                 return strResponse;
             }
             catch(Exception)

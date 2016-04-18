@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.page = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.startByPage = new System.Windows.Forms.Button();
             this.output = new System.Windows.Forms.TextBox();
             this.cookie = new System.Windows.Forms.TextBox();
             this.num = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.startByNum = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -49,15 +49,15 @@
             this.page.Size = new System.Drawing.Size(232, 21);
             this.page.TabIndex = 1;
             // 
-            // button1
+            // startByPage
             // 
-            this.button1.Location = new System.Drawing.Point(316, 63);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Start";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.startByPage.Location = new System.Drawing.Point(316, 63);
+            this.startByPage.Name = "startByPage";
+            this.startByPage.Size = new System.Drawing.Size(75, 23);
+            this.startByPage.TabIndex = 3;
+            this.startByPage.Text = "Start";
+            this.startByPage.UseVisualStyleBackColor = true;
+            this.startByPage.Click += new System.EventHandler(this.startByPage_Click);
             // 
             // output
             // 
@@ -82,15 +82,15 @@
             this.num.Size = new System.Drawing.Size(232, 21);
             this.num.TabIndex = 2;
             // 
-            // button2
+            // startByNum
             // 
-            this.button2.Location = new System.Drawing.Point(316, 100);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Start";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.startByNum.Location = new System.Drawing.Point(316, 100);
+            this.startByNum.Name = "startByNum";
+            this.startByNum.Size = new System.Drawing.Size(75, 23);
+            this.startByNum.TabIndex = 4;
+            this.startByNum.Text = "Start";
+            this.startByNum.UseVisualStyleBackColor = true;
+            this.startByNum.Click += new System.EventHandler(this.startByNum_Click);
             // 
             // label1
             // 
@@ -157,11 +157,11 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.startByNum);
             this.Controls.Add(this.num);
             this.Controls.Add(this.cookie);
             this.Controls.Add(this.output);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.startByPage);
             this.Controls.Add(this.page);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -179,11 +179,11 @@
         #endregion
 
         private System.Windows.Forms.TextBox page;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button startByPage;
         public System.Windows.Forms.TextBox output;
         private System.Windows.Forms.TextBox cookie;
         private System.Windows.Forms.TextBox num;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button startByNum;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

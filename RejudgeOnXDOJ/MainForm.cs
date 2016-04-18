@@ -90,14 +90,14 @@ namespace RejudgeOnXDOJ
             }
             Rejudge();
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void startByPage_Click(object sender, EventArgs e)
         {
             output.Text = "";
             string url = page.Text.ToString();
             Task.Factory.StartNew(() => GetId(url, ref data));
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void startByNum_Click(object sender, EventArgs e)
         {
             output.Text = "";
             Task.Factory.StartNew(() => Getdata());

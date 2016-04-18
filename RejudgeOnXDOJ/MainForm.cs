@@ -48,13 +48,12 @@ namespace RejudgeOnXDOJ
         /// </summary>
         public void Rejudge()
         {
-            
             for (int i = 1; i <= cnt; i++)
             {
                 int ii = i;
                 new Thread(() =>
                 {
-                    string rejudgeUrl = "http://acm.xidian.edu.cn/admin/rejudge.php";
+                    string rejudgeUrl = this.rejudgeUrl.Text.ToString();
                     string html = Query.HttpGetRequest(rejudgeUrl, rejudgeUrl, "GET", cookie.Text.ToString(), null);
                     //获得postkey
                     html = html.Substring(html.IndexOf("Solution"));
@@ -112,13 +111,15 @@ namespace RejudgeOnXDOJ
         {
             System.Net.ServicePointManager.DefaultConnectionLimit = 200;
             Opacity = 0.75;
-            
+            opacity.Text = "0.75";
+            rejudgeUrl.Text = "http://acm.xidian.edu.cn/admin/rejudge.php";
+
         }
         private void opacity_TextChanged(object sender, EventArgs e)
         {
             if (opacity.Text.ToString() == string.Empty)
             {
-                opacity.Text = "0.75";
+                
                 Opacity = 0.75;
             }
             else

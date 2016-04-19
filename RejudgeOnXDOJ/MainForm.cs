@@ -48,12 +48,12 @@ namespace RejudgeOnXDOJ
         /// </summary>
         public void Rejudge()
         {
+            string rejudgeUrl = this.rejudgeUrl.Text.ToString();
             for (int i = 1; i <= cnt; i++)
             {
                 int ii = i;
                 new Thread(() =>
                 {
-                    string rejudgeUrl = this.rejudgeUrl.Text.ToString();
                     string html = Query.HttpGetRequest(rejudgeUrl, rejudgeUrl, "GET", cookie.Text.ToString(), null);
                     //获得postkey
                     html = html.Substring(html.IndexOf("Solution"));
